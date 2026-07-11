@@ -2096,6 +2096,12 @@ local Library = {
                     AutomaticSize = Enum.AutomaticSize.XY
                 }):AddToTheme({TextColor3 = 'Accent'})
 
+                Library:Create("UIPadding", {
+                    Name = "\0",
+                    Parent = Items["Title"].Instance,
+                    PaddingTop = UDim.new(0, 2)
+                })
+
 
                 Watermark.Items = Items 
             end
