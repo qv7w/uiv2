@@ -2535,6 +2535,7 @@ local Library = {
             UpdatePositions()
             FadeNotification(0)
         
+            -- v2-grow-left-to-right (search for this if the bar still appears to shrink; if it's missing you're on an old cached copy)
             Items["DurationLiner"]:Tween({Size = UDim2.new(1, 16, 0, 1)}, TweenInfo.new(Duration, Enum.EasingStyle.Linear, Enum.EasingDirection.Out))
         
             task.spawn(function()
