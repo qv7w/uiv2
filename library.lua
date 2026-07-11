@@ -2095,12 +2095,7 @@ local Library = {
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.XY
                 }):AddToTheme({TextColor3 = 'Accent'})
-                
-                Library:Create("UIPadding", {
-                    Name = "\0",
-                    Parent = Items["Title"].Instance,
-                    PaddingBottom = UDim.new(0, 2)
-                })
+
 
                 Watermark.Items = Items 
             end
@@ -2405,7 +2400,7 @@ local Library = {
                 Items["Notification"] = Library:Create("Frame", {
                     Name = "\0",
                     Parent = Library.NotifHolder.Instance,
-                    Size = UDim2.new(0, 0, 0, 25),
+                    Size = UDim2.new(0, 0, 0, 21),
                     AnchorPoint = Vector2.new(0, 0),
                     Position = UDim2.new(0, -260, 0, GuiInset + Padding + 5),
                     BorderSizePixel = 0,
