@@ -1997,7 +1997,7 @@ local Library = {
                     Parent = Library.Holder.Instance,
                     AnchorPoint = Vector2.new(0, 0),
                     Position = UDim2.new(0, 10, 0, GuiInset + 10),
-                    Size = UDim2.new(0, 0, 0, 53),
+                    Size = UDim2.new(0, 0, 0, 39),
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.X,
                     BackgroundColor3 = Library.Theme["Background"]
@@ -2025,10 +2025,10 @@ local Library = {
                 Library:Create("UIPadding", {
                     Name = "\0",
                     Parent = Items["Watermark"].Instance,
-                    PaddingTop = UDim.new(0, 10),
-                    PaddingBottom = UDim.new(0, 10),
-                    PaddingRight = UDim.new(0, 10),
-                    PaddingLeft = UDim.new(0, 10)
+                    PaddingTop = UDim.new(0, 3),
+                    PaddingBottom = UDim.new(0, 3),
+                    PaddingRight = UDim.new(0, 3),
+                    PaddingLeft = UDim.new(0, 3)
                 })
                 
                 Items["Liner"] = Library:Create("Frame", {
@@ -5001,4 +5001,4 @@ local Library = {
 end
 
 getgenv().Library = Library
-return Library 
+return Library
