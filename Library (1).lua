@@ -2489,7 +2489,7 @@ local Library = {
                     Name = "\0",
                     Parent = Items["Notification"].Instance,
                     Position = UDim2.new(0, -8, 1, -1),
-                    Size = UDim2.new(1, 16, 0, 1),
+                    Size = UDim2.new(0, 0, 0, 1),
                     BorderSizePixel = 0,
                     BackgroundColor3 = Color
                 })
@@ -2535,7 +2535,7 @@ local Library = {
             UpdatePositions()
             FadeNotification(0)
         
-            Items["DurationLiner"]:Tween({Size = UDim2.new(0, 0, 0, 1)}, TweenInfo.new(Duration, Enum.EasingStyle.Linear, Enum.EasingDirection.Out))
+            Items["DurationLiner"]:Tween({Size = UDim2.new(1, 16, 0, 1)}, TweenInfo.new(Duration, Enum.EasingStyle.Linear, Enum.EasingDirection.Out))
         
             task.spawn(function()
                 local Tick = tick()
