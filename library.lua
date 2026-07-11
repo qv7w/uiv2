@@ -2099,7 +2099,7 @@ local Library = {
                 Library:Create("UIPadding", {
                     Name = "\0",
                     Parent = Items["Title"].Instance,
-                    PaddingTop = UDim.new(0, 2)
+                    PaddingBottom = UDim.new(0, 4)
                 })
 
 
