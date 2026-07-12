@@ -2134,6 +2134,12 @@ local Library = {
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.XY
                 }):AddToTheme({TextColor3 = 'Text'})
+                
+                Library:Create("UIPadding", {
+                    Name = "\0",
+                    Parent = NewItem.Instance,
+                    PaddingBottom = UDim.new(0, 4)
+                })
 
                 function NewItem:SetText(Text)
                     NewItem.Instance.Text = tostring(Text)
