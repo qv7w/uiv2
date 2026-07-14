@@ -1558,13 +1558,13 @@ local Library = {
                 Parent = Library.Holder.Instance,
                 Visible = false,
                 Size = UDim2.new(0, 100, 0, 44),
-                BackgroundColor3 = Library.Theme.BackgroundColor,
+                BackgroundColor3 = Library.Theme["Background"],
                 BorderSizePixel = 1,
-                BorderColor3 = Library.Theme.OutlineColor,
+                BorderColor3 = Library.Theme["Outline"],
                 ZIndex = 99999,
                 Active = true
             })
-            ContextMenu:AddToTheme({BackgroundColor3 = "BackgroundColor", BorderColor3 = "OutlineColor"})
+            ContextMenu:AddToTheme({BackgroundColor3 = "Background", BorderColor3 = "Outline"})
 
             local CopyBtn = Library:Create("TextButton", {
                 Name = "\0",
@@ -1573,14 +1573,14 @@ local Library = {
                 Text = "  Copy color",
                 TextXAlignment = Enum.TextXAlignment.Left,
                 FontFace = Library.Font, TextSize = Library.FontSize,
-                BackgroundColor3 = Library.Theme.BackgroundColor,
-                TextColor3 = Library.Theme.TextColor,
+                BackgroundColor3 = Library.Theme["Background"],
+                TextColor3 = Library.Theme["Text"],
                 BorderSizePixel = 0,
                 ZIndex = 99999,
                 AutoButtonColor = true,
                 Active = true
             })
-            CopyBtn:AddToTheme({BackgroundColor3 = "BackgroundColor", TextColor3 = "TextColor"})
+            CopyBtn:AddToTheme({BackgroundColor3 = "Background", TextColor3 = "Text"})
 
             local PasteBtn = Library:Create("TextButton", {
                 Name = "\0",
@@ -1589,14 +1589,14 @@ local Library = {
                 Text = "  Paste color",
                 TextXAlignment = Enum.TextXAlignment.Left,
                 FontFace = Library.Font, TextSize = Library.FontSize,
-                BackgroundColor3 = Library.Theme.BackgroundColor,
-                TextColor3 = Library.Theme.TextColor,
+                BackgroundColor3 = Library.Theme["Background"],
+                TextColor3 = Library.Theme["Text"],
                 BorderSizePixel = 0,
                 ZIndex = 99999,
                 AutoButtonColor = true,
                 Active = true
             })
-            PasteBtn:AddToTheme({BackgroundColor3 = "BackgroundColor", TextColor3 = "TextColor"})
+            PasteBtn:AddToTheme({BackgroundColor3 = "Background", TextColor3 = "Text"})
             Library:Create("UIListLayout", { Parent = ContextMenu.Instance })
 
             CopyBtn:Connect("MouseButton1Down", function()
