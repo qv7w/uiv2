@@ -38,11 +38,11 @@ local Library = {
     Flags = { },
     MenuKeybind = tostring(Enum.KeyCode.RightShift), -- has to be a string
 
-    Directory = "juanitaaaaaaa",
+    Directory = "aurahook",
     Folders = {
-        Assets = "/Assets",
-        Configs = "/Configs",
-        Themes = "/Themes"
+        Assets = "/assets",
+        Configs = "/configs",
+        Themes = "/themes"
     },
 
     FontSize = 12,
@@ -84,6 +84,7 @@ local Library = {
 
     ThemingStuff = { },
     ThemeMap = { },
+    ColorClipboard = nil,
 
     OpenFrames = { },
 
@@ -1552,6 +1553,79 @@ local Library = {
                 Colorpicker:Set(Value, Alpha)
             end
 
+            local ContextMenu = Library:Create("Frame", {
+                Name = "\0",
+                Parent = Library.Holder.Instance,
+                Visible = false,
+                Size = UDim2.new(0, 100, 0, 44),
+                BackgroundColor3 = Library.Theme.BackgroundColor,
+                BorderSizePixel = 1,
+                BorderColor3 = Library.Theme.OutlineColor,
+                ZIndex = 99999,
+                Active = true
+            })
+            ContextMenu:AddToTheme({BackgroundColor3 = "BackgroundColor", BorderColor3 = "OutlineColor"})
+
+            local CopyBtn = Library:Create("TextButton", {
+                Name = "\0",
+                Parent = ContextMenu.Instance,
+                Size = UDim2.new(1, 0, 0.5, 0),
+                Text = "  Copy color",
+                TextXAlignment = Enum.TextXAlignment.Left,
+                FontFace = Library.Font, TextSize = Library.FontSize,
+                BackgroundColor3 = Library.Theme.BackgroundColor,
+                TextColor3 = Library.Theme.TextColor,
+                BorderSizePixel = 0,
+                ZIndex = 99999,
+                AutoButtonColor = true,
+                Active = true
+            })
+            CopyBtn:AddToTheme({BackgroundColor3 = "BackgroundColor", TextColor3 = "TextColor"})
+
+            local PasteBtn = Library:Create("TextButton", {
+                Name = "\0",
+                Parent = ContextMenu.Instance,
+                Size = UDim2.new(1, 0, 0.5, 0),
+                Text = "  Paste color",
+                TextXAlignment = Enum.TextXAlignment.Left,
+                FontFace = Library.Font, TextSize = Library.FontSize,
+                BackgroundColor3 = Library.Theme.BackgroundColor,
+                TextColor3 = Library.Theme.TextColor,
+                BorderSizePixel = 0,
+                ZIndex = 99999,
+                AutoButtonColor = true,
+                Active = true
+            })
+            PasteBtn:AddToTheme({BackgroundColor3 = "BackgroundColor", TextColor3 = "TextColor"})
+            Library:Create("UIListLayout", { Parent = ContextMenu.Instance })
+
+            CopyBtn:Connect("MouseButton1Down", function()
+                Library.ColorClipboard = {Colorpicker.Color, Colorpicker.Alpha}
+                ContextMenu.Instance.Visible = false
+            end)
+
+            PasteBtn:Connect("MouseButton1Down", function()
+                if Library.ColorClipboard then
+                    Colorpicker:Set(Library.ColorClipboard[1], Library.ColorClipboard[2])
+                end
+                ContextMenu.Instance.Visible = false
+            end)
+
+            Library:Connect(UserInputService.InputBegan, function(Input)
+                if Input.UserInputType == Enum.UserInputType.MouseButton2 then
+                    if Items["ColorpickerButton"]:IsMouseOverFrame() then
+                        ContextMenu.Instance.Position = UDim2.new(0, Mouse.X + 5, 0, Mouse.Y + 5)
+                        ContextMenu.Instance.Visible = true
+                    elseif ContextMenu.Instance.Visible and not ContextMenu:IsMouseOverFrame() then
+                        ContextMenu.Instance.Visible = false
+                    end
+                elseif Input.UserInputType == Enum.UserInputType.MouseButton1 then
+                    if ContextMenu.Instance.Visible and not ContextMenu:IsMouseOverFrame() then
+                        ContextMenu.Instance.Visible = false
+                    end
+                end
+            end)
+
             return Colorpicker, Items 
         end
 
@@ -1909,7 +1983,8 @@ local Library = {
             end)
     
             Library:Connect(UserInputService.InputBegan, function(Input, GPE)
-                if Keybind.Value == "none" then
+                local val = string.lower(tostring(Keybind.Value))
+                if val == "none" or val == "unknown" or val == "" then
                     return
                 end
     
@@ -1945,7 +2020,8 @@ local Library = {
                     return
                 end
 
-                if Keybind.Value == "None" then
+                local val = string.lower(tostring(Keybind.Value))
+                if val == "none" or val == "unknown" or val == "" then
                     return
                 end
     
@@ -2338,10 +2414,12 @@ local Library = {
                         NewKey:SetStatus(false)
                     end
                 end
-        
-                function NewKey:Set(Name, Mode, Key)
-                    NewKey.Object.Instance.Text = Name .. " - " .. Mode .. " [" .. Key .. "]"
 
+                function NewKey:Set(Name, Mode, Key)
+					local oldidentity = getidentity()
+					setidentity(8)
+                    NewKey.Object.Instance.Text = Name .. " - " .. Mode .. " [" .. Key .. "]"
+					setidentity(oldidentity) -- fuck this bullshit i swear to god
                     KeybindList:UpdateSize()
                 end
         
@@ -2659,7 +2737,7 @@ local Library = {
                 Library:Create("UIPadding", {
                     Name = "\0",
                     Parent = Items["Pages"].Instance,
-                    PaddingBottom = UDim.new(0, 4),
+                    PaddingBottom = UDim.new(0, 0),
                     PaddingRight = UDim.new(0, 8),
                     PaddingLeft = UDim.new(0, 8)
                 })
@@ -2730,7 +2808,7 @@ local Library = {
 
             -- the title animation logic below
             local OffsetX = 8
-            local OffsetY = 12
+            local OffsetY = 15
             local Width = 7 -- this would be the gap between each letter
 
             local WaveHeight = 4
@@ -3736,21 +3814,27 @@ local Library = {
                     AutomaticSize = Enum.AutomaticSize.Y
                 }):AddToTheme({TextColor3 = 'Text'})          
                 
-                Items["OptionHolder"] = Library:Create("TextButton", {
+                Items["OptionHolder"] = Library:Create("ScrollingFrame", {
                     Name = "\0",
-                    FontFace = Library.Font,
-                    TextSize = Library.FontSize,
                     Parent = Library.Holder.Instance,
                     Visible = false,
-                    TextColor3 = Color3.fromRGB(0, 0, 0),
-                    Text = "",
-                    AutoButtonColor = false,
                     Size = UDim2.new(0, 200, 0, 50),
                     Position = UDim2.new(0, 792, 0, 649),
                     BorderSizePixel = 0,
                     AutomaticSize = Enum.AutomaticSize.Y,
-                    BackgroundColor3 = Library.Theme["Background"]
-                }):AddToTheme({BackgroundColor3 = 'Background'})
+                    BackgroundColor3 = Library.Theme["Background"],
+                    ScrollBarThickness = 2,
+                    ScrollingDirection = Enum.ScrollingDirection.Y,
+                    AutomaticCanvasSize = Enum.AutomaticSize.Y,
+                    CanvasSize = UDim2.new(0,0,0,0),
+                    ScrollBarImageColor3 = Library.Theme["Outline"]
+                }):AddToTheme({BackgroundColor3 = 'Background', ScrollBarImageColor3 = 'Outline'})
+
+                Library:Create("UISizeConstraint", {
+                    Name = "\0",
+                    Parent = Items["OptionHolder"].Instance,
+                    MaxSize = Vector2.new(math.huge, Params.Max or 250)
+                })
                 
                 Library:Create("UIStroke", {
                     Name = "\0",
